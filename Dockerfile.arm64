@@ -115,11 +115,20 @@ RUN git clone https://github.com/golang/lint.git /go/src/github.com/golang/lint 
 ENV REGISTRY_COMMIT e6c60e79c570f97ef36f280fcebed497682a5f37
 RUN set -x \
 	&& export GOPATH="$(mktemp -d)" \
-	&& git clone https://github.com/docker/distribution.git "$GOPATH/src/github.com/docker/distribution" \
-	&& (cd "$GOPATH/src/github.com/docker/distribution" && git checkout -q "$REGISTRY_COMMIT") \
+	&& git clone https://github.com/vijaykilari/docker-distribution-arm64.git "$GOPATH/src/github.com/docker/distribution" \
+	&& cd "$GOPATH/src/github.com/docker/distribution" \
 	&& GOPATH="$GOPATH/src/github.com/docker/distribution/Godeps/_workspace:$GOPATH" \
 		go build -o /usr/local/bin/registry-v2 github.com/docker/distribution/cmd/registry \
 	&& rm -rf "$GOPATH"
+#ENV REGISTRY_COMMIT e6c60e79c570f97ef36f280fcebed497682a5f37
+#RUN set -x \
+#	&& export GOPATH="$(mktemp -d)" \
+#	&& git clone https://github.com/docker/distribution.git "$GOPATH/src/github.com/docker/distribution" \
+#	&& (cd "$GOPATH/src/github.com/docker/distribution" && git checkout -q "$REGISTRY_COMMIT") \
+#	&& GOPATH="$GOPATH/src/github.com/docker/distribution/Godeps/_workspace:$GOPATH" \
+#		go build -v -x -tags noresumabledigest github.com/docker/distribution/cmd/registry
+		#go build -v -x -tags noresumabledigest -o /usr/local/bin/registry-v2 github.com/docker/distribution/cmd/registry
+#	&& rm -rf "$GOPATH"
 
 # Install notary server
 # commented Notary temporary as we are waiting for an update of jose2go: https://github.com/docker/notary/issues/239
