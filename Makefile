@@ -8,6 +8,9 @@ DOCKER_FILE = Dockerfile
 ifeq ($(DOCKER_ENGINE_OSARCH),linux/arm)
 	DOCKER_FILE = Dockerfile.armhf
 endif
+ifeq ($(DOCKER_ENGINE_OSARCH),linux/arm64)
+	DOCKER_FILE = Dockerfile.arm64
+endif
 export DOCKER_FILE
 
 # env vars passed through directly to Docker's build scripts
